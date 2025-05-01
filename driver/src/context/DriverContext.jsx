@@ -6,19 +6,21 @@ export const DriverAppContext = createContext();
 
 export const DriverAppContextProvider = ({ children }) => {
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
-  const [dtoken, setDtoken] = useState(null);
+  const [dtoken, setDtoken] = useState(() => localStorage.getItem("dtoken") || "");
   const [driver,setDriver]=useState()
   const [bookings,SetBookings]=useState([])
 
 
   const fetchDriverDetails = async () => {
     try {
+      // console.log(dtoken);
+
       const response = await axios.get(`${backendUrl}/api/driver/profile`, {
         headers: {
           dtoken,
         },
       });
-      console.log(response);
+      // console.log(response.data.driver.name);
       setDriver(response.data.driver);
     } catch (error) {
       console.log('Error fetching driver details:', error);
@@ -33,13 +35,14 @@ export const DriverAppContextProvider = ({ children }) => {
  
 
 
-  useEffect(() => {
-    const storedToken = localStorage.getItem("dtoken");
-    if (storedToken) {
-      setDtoken(storedToken);
-    }
-  }, []);
-
+ // Keep token updated in localStorage if it changes
+ useEffect(() => {
+  if (dtoken) {
+    localStorage.setItem("dtoken", dtoken);
+  } else {
+    localStorage.removeItem("dtoken");
+  }
+}, [dtoken]);
 
 
 

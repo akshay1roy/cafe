@@ -14,25 +14,35 @@ import UserBooking from "./UserBooking"
 
 const slidesData = [
   {
+    image: car, // Replace with your actual image import
+    title: "City Rides",
+    description: "Quick, reliable, and affordable rides across the city at your fingertips.",
+  },
+  {
     image: fourth,
-    title: "Luxury Cafe",
-    description: "Enjoy world-class coffee and ambiance.",
+    title: "Outstation Trips",
+    description: "Plan intercity travel with ease—book rides to your favorite destinations.",
   },
   {
     image: third,
-    title: "Delicious Meals",
-    description: "Savor the taste of gourmet dishes.",
-  },
-  {
-    image: car,
-    title: "Fast Delivery",
-    description: "We deliver your orders on time, every time.",
+    title: "Hourly Rentals",
+    description: "Need a car for a few hours? Rent by the hour and make multiple stops hassle-free.",
   },
   {
     image: first,
-    title: "Cozy Environment",
-    description: "Relax in our peaceful and cozy settings.",
+    title: "Airport Transfers",
+    description: "On-time pickups and drop-offs to and from the airport, 24x7.",
   },
+  {
+    image: first,
+    title: "Electric Rides",
+    description: "Go green with our fleet of eco-friendly electric vehicles.",
+  },
+  {
+    image: third,
+    title: "Safety First",
+    description: "Your safety is our priority with verified drivers and emergency features.",
+  }
 ];
 
 export default function Home() {

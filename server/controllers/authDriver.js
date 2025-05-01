@@ -86,7 +86,7 @@ export const loginDriver = async (req, res) => {
 
 export const getDriver = async (req, res) => {
     try {
-        const id = req.driver._id;
+        const id = req.driver?._id;
 
         console.log(id);
 
@@ -116,7 +116,7 @@ export const driverApproveBooking = async (req, res) => {
       // Find the booking by ID
       const booking = await Booking.findById(bookingId);
       if (!booking) {
-          return res.status(404).json({ error: "Booking not found" });
+          return res.status(404).json({success:false, error: "Booking not found" });
       }
 
       // Check if the booking is assigned to the current driver
@@ -132,7 +132,7 @@ export const driverApproveBooking = async (req, res) => {
           // Update the driver's status to 'busy'
           const driver = await Driver.findById(driverId);
           if (!driver) {
-              return res.status(404).json({ error: "Driver not found" });
+              return res.status(404).json({success:false, error: "Driver not found" });
           }
           driver.status = 'busy';
           await driver.save();
@@ -151,20 +151,20 @@ export const driverApproveBooking = async (req, res) => {
           // Remove the booking from the driver's assigned bookings
           const driver = await Driver.findById(driverId);
           if (!driver) {
-              return res.status(404).json({ error: "Driver not found" });
+              return res.status(404).json({success:false, error: "Driver not found" });
           }
           driver.bookingsAssigned = driver.bookingsAssigned.filter(id => String(id) !== bookingId);
           await driver.save();
 
       } else {
-          return res.status(400).json({ error: "Invalid action. Please use 'approve' or 'reject'" });
+          return res.status(400).json({success:false, error: "Invalid action. Please use 'approve' or 'reject'" });
       }
 
       // Save the booking after updating the status
       await booking.save();
 
       // Respond with success message and updated booking details
-      res.status(200).json({ message: `Booking ${action}ed successfully`, booking });
+      res.status(200).json({success:true, message: `Booking ${action}ed successfully`, booking });
 
   } catch (error) {
       console.error(error);
@@ -222,8 +222,8 @@ export const getAvailableCafes = async (req, res) => {
 
 
 export const getDriverBookings = async (req, res) => {
-  const driverId = req.driver; // Extracted from auth middleware
-
+  const driverId = req.driver._id // Extracted from auth middleware
+    console.log(driverId)
   try {
     // Fetch bookings assigned to this driver, and populate user details
     const bookings = await Booking.find({ driver: driverId })

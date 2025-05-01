@@ -20,7 +20,7 @@ const BookingList = () => {
       );
       setBookings(response.data.bookings);
     } catch (error) {
-      toast.error(error.response?.data?.message || 'Failed to load bookings');
+      toast.error('Failed to load bookings');
     }
   };
 
@@ -28,29 +28,50 @@ const BookingList = () => {
     if (dtoken) fetchBookings();
   }, [dtoken]);
 
-  const updateStatus = async (bookingId, newStatus) => {
+ 
+  const updateStatus = async (bookingId) => {
+
+    console.log(bookingId);
     try {
+      // Make sure dtoken exists
+      if (!dtoken) {
+        toast.error("Authentication required");
+        return;
+      }
+  
+      // Update booking status via API
       const response = await axios.put(
-        `${backendUrl}/api/booking/approval`,
-        { bookingId, status: newStatus },
+        `${backendUrl}/api/driver/approval`,
+        { bookingId, action: "approve" },
         {
           headers: {
             dtoken,
           },
-        }
+        },
       );
-      toast.success(response.data.message);
-      fetchBookings(); // Refresh
+
+      console.log(response)
+  
+      // Check if the response is successful and show the success toast
+      if (response.data.success) {
+        toast.success("Status updated successfully");
+        fetchBookings(); // Refresh bookings after updating status
+      } else {
+        toast.error("Failed to update status");
+      }
     } catch (error) {
-      toast.error(error.response?.data?.error || 'Failed to update status');
+      // Handle errors, showing the error from the response if available
+      const errorMessage = error.response?.data?.error || 'Failed to update status';
+      toast.error(errorMessage);
     }
   };
+  
 
   const cancelBooking = async (bookingId) => {
     try {
       const response = await axios.put(
-        `${backendUrl}/api/booking/update-status`,
-        { bookingId, status: 'reject' },
+        `${backendUrl}/api/driver/approval`,
+        { bookingId, action: 'reject' },
         {
           headers: {
             dtoken,
@@ -102,7 +123,7 @@ const BookingList = () => {
                 {booking.status === 'pending' && (
                   <>
                     <button
-                      onClick={() => updateStatus(booking._id, 'approve')}
+                      onClick={() => updateStatus(booking._id)}
                       className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-md text-sm"
                     >
                        Confirm
@@ -118,7 +139,7 @@ const BookingList = () => {
                 {booking.status === 'confirmed' && (
                   <>
                     <button
-                      onClick={() => updateStatus(booking._id, 'approve')}
+                      onClick={() => updateStatus(booking._id)}
                       className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-md text-sm"
                     >
                        Complete

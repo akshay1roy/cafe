@@ -31,7 +31,7 @@ export default function Navbar() {
       </button>
 
       {/* Middle Section - Admin Name (Hidden on Small Screens) */}
-      <div className="hidden md:block text-lg font-semibold">Driver <span className="text-yellow-400">{driver?.name}</span> </div>
+      <div className="hidden md:block text-lg font-semibold"> Driver Pannel <span className="text-yellow-400">{driver?.name}</span> </div>
 
       {/* Right Section - Notifications & Logout */}
       <div className="hidden md:flex items-center space-x-4">

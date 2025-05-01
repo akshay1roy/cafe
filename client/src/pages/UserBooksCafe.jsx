@@ -37,7 +37,7 @@ export default function UserBooksCafe() {
   }
 
   return (
-    <div className="p-6 bg-white rounded-lg shadow-md">
+    <div className=" px-6 py-6 m-4 md:mx-15 bg-white rounded-lg shadow-md">
       <h2 className="text-2xl font-semibold text-gray-800 mb-4">Your Booked Cafes</h2>
 
       {bookings.length <= 0 ? (
@@ -47,7 +47,7 @@ export default function UserBooksCafe() {
           {bookings.map((booking) => (
             <li
               key={booking._id}
-              className="border-b pb-4 hover:shadow-md hover:bg-gray-50 transition duration-300"
+              className="border-b pb-4  transition duration-300"
             >
               <div className="flex justify-between items-center ">
                 <p className="font-medium text-lg text-gray-800">
@@ -55,6 +55,7 @@ export default function UserBooksCafe() {
                 </p>
                 <p className="font-medium text-lg text-gray-800">
                   <strong>Destination:</strong>  <span className="text-pink-400 capitalize">{booking.destination}</span>
+                  <p className="text-sm">Booking Id: <span>{booking._id}</span> </p>
                 </p>
               </div>
               <div className="mt-2">

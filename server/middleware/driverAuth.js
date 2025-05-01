@@ -14,13 +14,15 @@ const driverAuth = async (req, res, next) => {
 
     const decoded = jwt.verify(dtoken, process.env.JWT_SECRET);
 
-    // console.log(decoded)
+    console.log(decoded)
 
-    const driver = await Driver.findById(decoded.id).select("-password");
-    if (!driver) return res.status(404).json({ error: "Driver not found" });
-    // console.log(driver._id);
+    const driver = await Driver.findById(decoded.driverId).select("-password");
+    if (!driver) return res.json({ error: "Driver not found" });
+    // console.log(driver);
 
-    req.driver = driver._id; // add user to request object
+
+    req.driver = driver; // add user to request object
+    // console.log(req.driver);
     next();
   } catch (error) {
     return res.status(401).json({ error: "Invalid or expired token" });

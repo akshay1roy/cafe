@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { Menu, X } from 'lucide-react';
 import { Link, useNavigate } from "react-router-dom";
 import { CafeAppContext } from '../context/CafeAppContext';
