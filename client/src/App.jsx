@@ -10,6 +10,7 @@ import Services from "./pages/Services";
 
 import Footer from "./pages/footer";
 import UserBooksCafe from "./pages/UserBooksCafe";
+import OurBooking from "./pages/OurBooking";
 // import services from './pages/services'
 
 const App = () => {
@@ -24,7 +25,8 @@ const App = () => {
           <Route path="/signup" element={<Register />} />
           <Route path="/about" element={<About />} />
           <Route path="/services" element={<Services />} />
-          <Route path="/mybooking" element={<UserBooksCafe/>} />
+          <Route path="/myBooking" element={<UserBooksCafe/>} />
+          <Route path="/OurBookings" element={<OurBooking/>} />
 
         </Routes>
         <Footer />

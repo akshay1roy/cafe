@@ -169,3 +169,16 @@ export const fetchBookingDetails = async (req, res) => {
     });
   }
 };
+
+
+export const getALLBookings = async (req, res) => {
+  try {
+    const bookings = await Booking.find({})
+      .populate('user', 'name');  // Populating the 'user' field and only fetching the 'name' field
+
+    res.json({ success: true, bookings });
+  } catch (error) {
+    // console.log(error);
+    res.status(500).json({ success: false, message: 'Server error occurred while fetching bookings' });
+  }
+};
